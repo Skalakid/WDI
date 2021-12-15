@@ -11,7 +11,6 @@ def rek(n, result = 0, pos = 0, b = False):
         if result > 9 and b and isPrime(result):
             print(result)
         return
-    print(n//10, result, pos, b)
     rek(n//10, result, pos, True)
     rek(n//10, result + ((n%10) * 10 ** pos), pos + 1, b)
 

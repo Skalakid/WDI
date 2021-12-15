@@ -1,28 +1,54 @@
+# Problem skoczka
+import sys
+stop = False
 
-def skoczek(t, y, x, nr_skoku=1):
-    t[y][x] = nr_skoku
+def skok(arr, y, x, nr_ruchu = 1):
+    global stop
 
-    if nr_skoku == len(t)**2:
-        printBoard(t)
+    # printChess(arr)
+    # print()
+
+    if stop:
+        return
+
+    arr[y][x] = nr_ruchu
+
+    if nr_ruchu == n*n:
+        printChess(arr)
         return True
     else:
         jumps = ((-1, 2), (1, 2), (2, 1), (2, -1), (1, -2), (-1, -2), (-2, -1), (-2, 1))
         for jump in jumps:
-            if 0 <= y + jump[0] < len(t) and 0 <= x + jump[1] < len(t) and t[y + jump[0]][x + jump[1]] == 0:
-                if skoczek(t, y + jump[0], x + jump[1], nr_skoku+1):
+            if -1 < y + jump[0] < len(arr) and -1 < x + jump[1] < len(arr) and arr[y + jump[0]][x + jump[1]] == 0:
+                if skok(arr, y + jump[0], x + jump[1], nr_ruchu + 1):
                     return True
-        t[y][x] = 0
+        arr[y][x] = 0
     return False
 
-def printBoard(t):
-    for i in range(len(t)):
-        for j in range(len(t)):
-            print(t[i][j], end='\t')
+def printChess(arr):
+    for i in range(len(arr)):
+        for j in range(len(arr)):
+            print(arr[i][j], end='\t')
         print('')
     print()
 
-n = int(input())
-t = [[0 for _ in range(n)] for _ in range(n)]
-for i in range(len(t)):
+def clearTab(t):
+    for i in range(len(t)):
         for j in range(len(t)):
-            skoczek(t, i, j)
+            t[i][j] = 0
+
+
+n = int(input())
+arr = [[0 for _ in range(n)] for _ in range(n)]
+flaga = False
+for i in range(n):
+    for j in range(n):
+        clearTab(arr)
+        if skok(arr,i,j,1):
+            flaga = True
+            break
+    if flaga:
+        break
+if not flaga:
+    print(False)
+
